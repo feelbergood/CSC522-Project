@@ -2,8 +2,6 @@ import pandas as pd
 import logistic_regression_522 
 import knn_522
 from sklearn.model_selection import train_test_split
-# import matplotlib.pyplot as plt
-# import seaborn as sns
 from sklearn import metrics
 from sklearn.metrics import fbeta_score, make_scorer
 from sklearn.preprocessing import StandardScaler, LabelEncoder
@@ -50,9 +48,6 @@ def run_me():
     x = mapper.fit_transform(x, 4)
     mapper = DataFrameMapper([(y.columns, LabelEncoder())])
     y = mapper.fit_transform(y, 4)
-
-    # x = pd.DataFrame(x, index=x.index, columns=x.columns)
-
     evaluate_predictions(x,y)
 
 
