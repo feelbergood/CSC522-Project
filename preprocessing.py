@@ -30,9 +30,20 @@ for index, row in df_team.iterrows():
         df_team.loc[index, 'class'] = 1
 
 df_team.to_csv('output/team_seasons_classified_orig.csv', index=False)
-
-# print(df_team.columns)
-df_team = df_team[[ 'o_fgm', 'o_fga', 'o_ftm', 'o_fta', 'o_oreb',
+df_test = df_team.loc[df_team.year >= 2003]
+df_train = df_team.loc[df_team.year < 2003]
+df_train.to_csv('output/team_seasons_classified_orig_train.csv', index=False)
+df_test.to_csv('output/team_seasons_classified_orig_test.csv', index=False)
+def reduce_columns(df_input):
+    df_output = df_input[[ 'o_fgm', 'o_fga', 'o_ftm', 'o_fta', 'o_oreb',
        'o_dreb', 'o_reb', 'o_asts', 'o_pf', 'o_stl', 'o_to', 'o_blk', 'o_pts', 'd_fgm', 'd_fga', 'd_ftm', 'd_fta', 'd_oreb',
        'd_dreb', 'd_reb', 'd_asts', 'd_pf', 'd_stl', 'd_to', 'd_blk',  'd_pts', 'pace', 'class']]
-(df_team.to_csv('output/team_seasons_classified_1.csv', index = False))
+    return df_output
+
+
+
+
+df_train = reduce_columns(df_train)
+df_test = reduce_columns(df_test)
+(df_train.to_csv('output/team_seasons_classified_1_train.csv', index = False))
+(df_test.to_csv('output/team_seasons_classified_1_test.csv', index = False))
