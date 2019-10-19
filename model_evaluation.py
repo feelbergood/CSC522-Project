@@ -1,5 +1,6 @@
 import pandas as pd 
 import logistic_regression_522 
+import knn_522
 from sklearn.model_selection import train_test_split
 # import matplotlib.pyplot as plt
 # import seaborn as sns
@@ -13,7 +14,8 @@ from sklearn.metrics import confusion_matrix
 
 
 def build_model():
-    return logistic_regression_522.get_model()
+    # return logistic_regression_522.get_model()
+    return knn_522.get_model()
 
 def make_predictions(x, y):
     model = build_model()
