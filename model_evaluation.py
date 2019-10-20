@@ -1,6 +1,7 @@
-import pandas as pd 
-import logistic_regression_522 
+import pandas as pd
+import logistic_regression_522
 import knn_522
+import svm_522
 import decision_tree
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import cross_val_predict
@@ -8,7 +9,7 @@ from sklearn_pandas import DataFrameMapper
 from sklearn.metrics import confusion_matrix
 
 
-models = [logistic_regression_522, knn_522, decision_tree]
+models = [logistic_regression_522, knn_522, decision_tree, svm_522]
 
 
 def make_predictions(model, x, y):
@@ -30,7 +31,7 @@ def evaluate_predictions(model, x, y):
     f1 = 2 * (precision) * (recall) / (precision + recall)
     print("accuracy: ", accuracy)
     print("precision: ", precision)
-    print("recall: ", recall)    
+    print("recall: ", recall)
     print("f1: ", f1)
     evaluation_metrics = pd.read_csv("model_evaluation_metrics/train_evaluation.csv", index_col = 0)
     model_name = model.get_name()
