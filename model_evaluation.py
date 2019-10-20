@@ -1,6 +1,7 @@
 import pandas as pd 
 import logistic_regression_522 
 import knn_522
+import decision_tree
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 from sklearn.metrics import fbeta_score, make_scorer
@@ -37,6 +38,9 @@ def evaluate_predictions(x, y):
     print("precision: ", precision)
     print("recall: ", recall)    
     print("f1: ", f1)
+
+
+# def evaluate_model(model, x, y):
 
 
 def run_me():
