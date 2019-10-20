@@ -10,15 +10,16 @@ from sklearn_pandas import DataFrameMapper
 from sklearn.metrics import confusion_matrix
 
 
-
 def build_model():
     # return logistic_regression_522.get_model()
     return knn_522.get_model()
 
+
 def make_predictions(x, y):
     model = build_model()
     y_pred = cross_val_predict(model, x, y, cv=10)
-    return y_pred 
+    return y_pred
+
 
 def evaluate_predictions(x, y):
     y_pred = make_predictions(x, y)
@@ -43,11 +44,11 @@ def run_me():
     x = data[[ 'o_fgm', 'o_fga', 'o_ftm', 'o_fta', 'o_oreb',
        'o_dreb', 'o_reb', 'o_asts', 'o_pf', 'o_stl', 'o_to', 'o_blk', 'o_pts', 'd_fgm', 'd_fga', 'd_ftm', 'd_fta', 'd_oreb',
        'd_dreb', 'd_reb', 'd_asts', 'd_pf', 'd_stl', 'd_to', 'd_blk',  'd_pts', 'pace']]
-    y = data[['class']]
+    y = data['class']
     mapper = DataFrameMapper([(x.columns, StandardScaler())])
     x = mapper.fit_transform(x, 4)
-    mapper = DataFrameMapper([(y.columns, LabelEncoder())])
-    y = mapper.fit_transform(y, 4)
+    mapper = DataFrameMapper([(y, LabelEncoder())])
+    y = mapper.fit_transform(y, 4).ravel()
     evaluate_predictions(x,y)
 
 
