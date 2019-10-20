@@ -15,5 +15,6 @@ def get_model():
     return logisticRegr
 ```
 3. import your model by writing import <modelname>.py at the top of the file model_evaluation.py
-4. change the function in buildmodel()
+4. change the function in build_model()
+5. in evaluate_prediction, change the model name to your own model name at around line 40
 5. run runme()
