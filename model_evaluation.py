@@ -38,13 +38,18 @@ def evaluate_predictions(x, y):
     print("precision: ", precision)
     print("recall: ", recall)    
     print("f1: ", f1)
-
+    evaluation_metrics = pd.read_csv("model_evaluation_metrics/train_evaluation.csv", index_col = 0)
+    model_name = 'undefined'
+    new_row = {"tp":tp, "tn":tn, "fp": fp, "fn": fn, "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1}
+    evaluation_metrics.loc[model_name] = new_row
+    evaluation_metrics.to_csv("model_evaluation_metrics/train_evaluation.csv")
 
 # def evaluate_model(model, x, y):
 
 
 def run_me():
     data = pd.read_csv('output/team_seasons_classified_1_train.csv')
+    
     x = data[[ 'o_fgm', 'o_fga', 'o_ftm', 'o_fta', 'o_oreb',
        'o_dreb', 'o_reb', 'o_asts', 'o_pf', 'o_stl', 'o_to', 'o_blk', 'o_pts', 'd_fgm', 'd_fga', 'd_ftm', 'd_fta', 'd_oreb',
        'd_dreb', 'd_reb', 'd_asts', 'd_pf', 'd_stl', 'd_to', 'd_blk',  'd_pts', 'pace']]
