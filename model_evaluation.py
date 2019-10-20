@@ -2,40 +2,30 @@ import pandas as pd
 import logistic_regression_522
 import knn_522
 import svm_522
-from sklearn.model_selection import train_test_split
-from sklearn import metrics
-from sklearn.metrics import fbeta_score, make_scorer
+import decision_tree
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import cross_val_predict
 from sklearn_pandas import DataFrameMapper
 from sklearn.metrics import confusion_matrix
 
 
-def build_model():
-    # return logistic_regression_522.get_model()
-    return svm_522.get_model()
+models = [logistic_regression_522, knn_522, decision_tree, svm_522]
 
 
-def make_predictions(x, y):
-    model = build_model()
+def make_predictions(model, x, y):
     y_pred = cross_val_predict(model, x, y, cv=10)
     return y_pred
 
 
-def evaluate_predictions(x, y):
-    y_pred = make_predictions(x, y)
+def evaluate_predictions(model, x, y):
+    y_pred = make_predictions(model.get_model(), x, y)
     print(confusion_matrix(y, y_pred))
-
     def tn(y, y_pred): return confusion_matrix(y, y_pred)[0, 0]
-
     def fp(y, y_pred): return confusion_matrix(y, y_pred)[0, 1]
-
     def fn(y, y_pred): return confusion_matrix(y, y_pred)[1, 0]
-
     def tp(y, y_pred): return confusion_matrix(y, y_pred)[1, 1]
-
-    tp, tn, fp, fn = int(tn(y, y_pred)), int(tp(y, y_pred)), int(fn(y, y_pred)), int(fp(y, y_pred))
-    accuracy = (tp + tn) / (tp + tn + fp + fn)
+    tp, tn, fp, fn = int(tn(y, y_pred)), int(tp(y, y_pred)), int(fn(y, y_pred)),int(fp(y, y_pred))
+    accuracy = (tp + tn)/(tp+ tn+ fp+ fn)
     precision = tp / (tp + fp)
     recall = tp / (tp + fn)
     f1 = 2 * (precision) * (recall) / (precision + recall)
@@ -43,15 +33,14 @@ def evaluate_predictions(x, y):
     print("precision: ", precision)
     print("recall: ", recall)
     print("f1: ", f1)
-    evaluation_metrics = pd.read_csv("model_evaluation_metrics/train_evaluation.csv", index_col=0)
-    model_name = 'undefined'
-    new_row = {"tp": tp, "tn": tn, "fp": fp, "fn": fn, "accuracy": accuracy, "precision": precision, "recall": recall,
-               "f1": f1}
+    evaluation_metrics = pd.read_csv("model_evaluation_metrics/train_evaluation.csv", index_col = 0)
+    model_name = model.get_name()
+    new_row = {"tp":tp, "tn":tn, "fp": fp, "fn": fn, "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1}
     evaluation_metrics.loc[model_name] = new_row
     evaluation_metrics.to_csv("model_evaluation_metrics/train_evaluation.csv")
 
 
-def run_me():
+def get_xy():
     data = pd.read_csv('output/team_seasons_classified_1_train.csv')
 
     x = data[['o_fgm', 'o_fga', 'o_ftm', 'o_fta', 'o_oreb',
@@ -63,7 +52,13 @@ def run_me():
     x = mapper.fit_transform(x, 4)
     mapper = DataFrameMapper([(y, LabelEncoder())])
     y = mapper.fit_transform(y, 4).ravel()
-    evaluate_predictions(x, y)
+    return x, y
+
+
+def run_me():
+    x, y = get_xy()
+    for model in models:
+        evaluate_predictions(model, x, y)
 
 
 run_me()
