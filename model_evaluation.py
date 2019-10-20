@@ -11,8 +11,8 @@ from sklearn.metrics import confusion_matrix
 
 
 def build_model():
-    return logistic_regression_522.get_model()
-    # return knn_522.get_model()
+    # return logistic_regression_522.get_model()
+    return knn_522.get_model()
 
 
 def make_predictions(x, y):
@@ -38,7 +38,7 @@ def evaluate_predictions(x, y):
     print("recall: ", recall)    
     print("f1: ", f1)
     evaluation_metrics = pd.read_csv("model_evaluation_metrics/train_evaluation.csv", index_col = 0)
-    model_name = 'logistic_regression'
+    model_name = '5nn'
     new_row = {"tp":tp, "tn":tn, "fp": fp, "fn": fn, "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1}
     evaluation_metrics.loc[model_name] = new_row
     evaluation_metrics.to_csv("model_evaluation_metrics/train_evaluation.csv")
