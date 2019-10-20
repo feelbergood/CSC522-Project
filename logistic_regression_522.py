@@ -7,3 +7,6 @@ def get_model():
     return logisticRegr
 # predictions = logisticRegr.predict(x_test)
 
+
+def get_name():
+    return "LR"
