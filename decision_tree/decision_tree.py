@@ -2,8 +2,8 @@ from sklearn import tree
 
 
 def get_model():
-    decision_tree = tree.DecisionTreeClassifier()
-    return decision_tree
+    dt = tree.DecisionTreeClassifier()
+    return dt
 
 
 def get_name():
