@@ -3,7 +3,7 @@ from sklearn.linear_model import LogisticRegression
 
 
 def get_model():
-    logisticRegr = LogisticRegression()
+    logisticRegr = LogisticRegression(solver='lbfgs')
     # model = logisticRegr.fit()
     return logisticRegr
 # predictions = logisticRegr.predict(x_test)
