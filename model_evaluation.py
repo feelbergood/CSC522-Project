@@ -19,7 +19,7 @@ def make_predictions(model, x, y):
 
 def evaluate_predictions(model, x, y):
     y_pred = make_predictions(model.get_model(), x, y)
-    print(confusion_matrix(y, y_pred))
+    print("confusion matrix: \n", confusion_matrix(y, y_pred))
     def tn(y, y_pred): return confusion_matrix(y, y_pred)[0, 0]
     def fp(y, y_pred): return confusion_matrix(y, y_pred)[0, 1]
     def fn(y, y_pred): return confusion_matrix(y, y_pred)[1, 0]
@@ -57,7 +57,7 @@ def get_xy():
 def run_me():
     x, y = get_xy()
     for model in models:
+        print("--------------" + model.get_name() + "--------------")
         evaluate_predictions(model, x, y)
-
 
 run_me()
