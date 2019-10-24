@@ -1,22 +1,20 @@
-# CSC522_Project
-Project for CSC522: Automated Learning and Data Analysis
+# CSC522 Project
+NBA teams making playoffs prediction
 
+## Work flow for adding new models
+- Libraries: pandas, sklearn, sklearn-pandas
 
-
-
-# work flow:
-1. pip install sklearn-pandas
-
-2. add your own model into the root folder, refer to the file logistic_regression_522.py, create a function that outputs the model:
+- Create your own model by creating a new python file with two methods get_model() and get_name(), for example:
 ```{python}
 def get_model():
     logisticRegr = LogisticRegression()
     # model = logisticRegr.fit()
     return logisticRegr
+
+def get_name():
+    return "LR"
 ```
-3. import your model by writing import <modelname>.py at the top of the file model_evaluation.py
-4. change the function in build_model()
-5. in evaluate_prediction, change the model name to your own model name at around line 40
-6. run runme()
-7. after running runme, change the model name back to undefined, so that other people can use
-8. git push
+
+- import your model by importing ```<modelname>.py``` you created in the file ```model_evaluation.py```
+- add your model to ```models``` list in ```model_evaluation.py```
+- run ```model_evaluation.py``` and see the results in ```train_evaluations.csv```
