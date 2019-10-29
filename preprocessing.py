@@ -2,6 +2,7 @@ import csv
 import os
 import pandas as pd
 
+
 dirname = os.path.dirname(__file__)
 player_playoffs = os.path.join(dirname, 'databasebasketball2.0/player_playoffs.txt')
 df_player = pd.read_csv(player_playoffs, sep=",")
@@ -47,3 +48,4 @@ df_train = reduce_columns(df_train)
 df_test = reduce_columns(df_test)
 (df_train.to_csv('output/team_seasons_classified_1_train.csv', index = False))
 (df_test.to_csv('output/team_seasons_classified_1_test.csv', index = False))
+
