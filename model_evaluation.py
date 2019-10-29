@@ -1,7 +1,10 @@
 import pandas as pd
 import logistic_regression_522
 import knn_522
-import svm_522
+import svm_c_522
+import svm_linear_522
+import svm_nu_522
+import rf_522
 import decision_tree
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import cross_val_predict
@@ -9,7 +12,7 @@ from sklearn_pandas import DataFrameMapper
 from sklearn.metrics import confusion_matrix
 
 
-models = [logistic_regression_522, knn_522, decision_tree, svm_522]
+models = [logistic_regression_522, knn_522, decision_tree, svm_c_522, svm_linear_522, svm_nu_522, rf_522]
 
 
 def make_predictions(model, x, y):
@@ -59,6 +62,5 @@ def run_me():
     x, y = get_xy()
     for model in models:
         evaluate_predictions(model, x, y)
-
 
 run_me()

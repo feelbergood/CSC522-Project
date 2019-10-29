@@ -1,15 +1,17 @@
 import pandas as pd
 from sklearn_pandas import DataFrameMapper
 from sklearn.preprocessing import StandardScaler, LabelEncoder
-from sklearn.svm import SVC
+from sklearn.svm import NuSVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 
 
+# Nu-Support Vector Classification
+
 def get_model():
-    param_grid = {"gamma": [0.001, 0.01, 0.1, 1, 10, 100],
-                  "C": [0.001, 0.01, 0.1, 1, 10, 100]}
-    grid_search = GridSearchCV(SVC(), param_grid, cv=5)
+    param_grid = {"nu": [0.1, 0.2, 0.3, 0.4, 0.5],
+                  "gamma": [0.001, 0.01, 0.1, 1, 10, 100]}
+    grid_search = GridSearchCV(NuSVC(), param_grid, cv=5)
 
     data = pd.read_csv('output/team_seasons_classified_1_train.csv')
 
@@ -25,13 +27,13 @@ def get_model():
 
     X_train, X_test, y_train, y_test = train_test_split(x, y, random_state=10)
     grid_search.fit(X_train, y_train)
-    # print("Test set score:{:.2f}".format(grid_search.score(X_test, y_test)))
-    # print("Best parameters:{}".format(grid_search.best_params_))
-    # print("Best score on train set:{:.2f}".format(grid_search.best_score_))
+    print("Test set score:{:.2f}".format(grid_search.score(X_test, y_test)))
+    print("Best parameters:{}".format(grid_search.best_params_))
+    print("Best score on train set:{:.2f}".format(grid_search.best_score_))
 
-    svm = SVC(gamma=grid_search.best_params_.get("gamma"), C=grid_search.best_params_.get("C"))
+    svm = NuSVC(gamma=grid_search.best_params_.get("gamma"), nu=grid_search.best_params_.get("nu"))
     return svm
 
 
 def get_name():
-    return "SVM"
+    return "Nu-Support SVC"
