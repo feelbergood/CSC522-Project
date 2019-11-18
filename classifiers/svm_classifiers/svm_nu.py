@@ -13,7 +13,7 @@ def get_model():
                   "gamma": [0.001, 0.01, 0.1, 1, 10, 100]}
     grid_search = GridSearchCV(NuSVC(), param_grid, cv=5)
 
-    data = pd.read_csv('output/team_seasons_classified_1.csv')
+    data = pd.read_csv('preprocessed_data/team_seasons_classified_1.csv')
 
     x = data[['o_fgm', 'o_fga', 'o_ftm', 'o_fta', 'o_oreb',
               'o_dreb', 'o_reb', 'o_asts', 'o_pf', 'o_stl', 'o_to', 'o_blk', 'o_pts', 'd_fgm', 'd_fga', 'd_ftm',
