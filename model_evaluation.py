@@ -2,6 +2,7 @@ import pandas as pd
 import logistic_regression
 import knn
 import svm
+import baseline
 from svm_classifiers import svm_c, svm_linear, svm_nu
 from decision_tree import decision_tree
 from emsemble_classifiers import AdaBoost, Bagging, RandomForest
@@ -11,7 +12,7 @@ from sklearn_pandas import DataFrameMapper
 from sklearn.metrics import confusion_matrix
 
 
-models = [logistic_regression, knn, decision_tree, svm, svm_c, svm_linear, svm_nu, AdaBoost, Bagging, RandomForest]
+models = [baseline, logistic_regression, knn, decision_tree, svm, svm_c, svm_linear, svm_nu, AdaBoost, Bagging, RandomForest]
 # knn_models = knn.get_models_with_ks()
 # knn_accuracies = {}
 
