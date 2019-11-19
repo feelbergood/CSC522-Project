@@ -29,7 +29,7 @@ for index, row in df_team.iterrows():
     if team in playoff_teams[year]:
         df_team.loc[index, 'class'] = 1
 
-df_team.to_csv('preprocessed_data/team_seasons_classified_orig.csv', index=False)
+# df_team.to_csv('preprocessed_data/team_seasons_classified_orig.csv', index=False)
 
 
 def reduce_columns(df_input):
@@ -39,4 +39,4 @@ def reduce_columns(df_input):
     return df_output
 
 
-reduce_columns(df_team).to_csv('preprocessed_data/team_seasons_classified_1.csv', index=False)
+# reduce_columns(df_team).to_csv('preprocessed_data/team_seasons_classified_1.csv', index=False)

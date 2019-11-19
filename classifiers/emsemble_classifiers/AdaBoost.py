@@ -1,10 +1,8 @@
 from sklearn.ensemble import AdaBoostClassifier
+from classifiers.Model import Model
 
 
-def get_model():
-    adaBoost = AdaBoostClassifier()
-    return adaBoost
-
-
-def get_name():
-    return "AdaBoost"
+class AdaBoostModel(Model):
+    def __init__(self):
+        self.name = "AdaBoost"
+        self.model = AdaBoostClassifier()

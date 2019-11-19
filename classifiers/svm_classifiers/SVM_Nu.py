@@ -1,15 +1,17 @@
 import pandas as pd
 from sklearn_pandas import DataFrameMapper
 from sklearn.preprocessing import StandardScaler, LabelEncoder
-from sklearn.svm import LinearSVC
+from sklearn.svm import NuSVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
+from classifiers.Model import Model
 
-# Linear-Support Vector Classification
 
+# Nu-Support Vector Classification
 def get_model():
-    param_grid = {"C": [0.001, 0.01, 0.1, 1, 10, 100]}
-    grid_search = GridSearchCV(LinearSVC(), param_grid, cv=5)
+    param_grid = {"nu": [0.1, 0.2, 0.3, 0.4, 0.5],
+                  "gamma": [0.001, 0.01, 0.1, 1, 10, 100]}
+    grid_search = GridSearchCV(NuSVC(), param_grid, cv=5)
 
     data = pd.read_csv('preprocessed_data/team_seasons_classified_1.csv')
 
@@ -29,9 +31,11 @@ def get_model():
     # print("Best parameters:{}".format(grid_search.best_params_))
     # print("Best score on train set:{:.2f}".format(grid_search.best_score_))
 
-    svm = LinearSVC(C=grid_search.best_params_.get("C"))
+    svm = NuSVC(gamma=grid_search.best_params_.get("gamma"), nu=grid_search.best_params_.get("nu"))
     return svm
 
 
-def get_name():
-    return "Linear-Support SVC"
+class SVMNuModel(Model):
+    def __init__(self):
+        self.name = "Nu-Support SVC"
+        self.model = NuSVC(gamma="scale")

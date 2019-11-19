@@ -1,16 +1,17 @@
 import pandas as pd
 from sklearn_pandas import DataFrameMapper
 from sklearn.preprocessing import StandardScaler, LabelEncoder
-from sklearn.svm import SVC
+from sklearn.svm import LinearSVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 
-# C-Support Vector Classification
+# Linear-Support Vector Classification
+from classifiers.Model import Model
+
 
 def get_model():
-    param_grid = {"gamma": [0.001, 0.01, 0.1, 1, 10, 100],
-                  "C": [0.001, 0.01, 0.1, 1, 10, 100]}
-    grid_search = GridSearchCV(SVC(), param_grid, cv=5)
+    param_grid = {"C": [0.001, 0.01, 0.1, 1, 10, 100]}
+    grid_search = GridSearchCV(LinearSVC(), param_grid, cv=5)
 
     data = pd.read_csv('preprocessed_data/team_seasons_classified_1.csv')
 
@@ -30,9 +31,11 @@ def get_model():
     # print("Best parameters:{}".format(grid_search.best_params_))
     # print("Best score on train set:{:.2f}".format(grid_search.best_score_))
 
-    svm = SVC(gamma=grid_search.best_params_.get("gamma"), C=grid_search.best_params_.get("C"))
+    svm = LinearSVC(C=grid_search.best_params_.get("C"))
     return svm
 
 
-def get_name():
-    return "C-Support SVC"
+class SVMLinearModel(Model):
+    def __init__(self):
+        self.name = "Linear-Support SVC"
+        self.model = LinearSVC()

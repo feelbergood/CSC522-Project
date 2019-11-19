@@ -1,10 +1,8 @@
 from sklearn.ensemble import BaggingClassifier
+from classifiers.Model import Model
 
 
-def get_model():
-    bagging = BaggingClassifier()
-    return bagging
-
-
-def get_name():
-    return "BaggingClassifier"
+class BaggingModel(Model):
+    def __init__(self):
+        self.name = "BaggingClassifier"
+        self.model = BaggingClassifier()

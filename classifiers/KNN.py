@@ -7,5 +7,9 @@ class KNNModel(Model):
         self.name = "KNN"
         self.model = KNeighborsClassifier(n_neighbors=28)
 
-    def parameter_tuning(self):
-        return None
+
+class TunedKNNModel(Model):
+    def __init__(self):
+        self.name = "KNN"
+        self.model = KNeighborsClassifier(n_neighbors=28)
+
