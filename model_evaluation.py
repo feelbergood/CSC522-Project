@@ -1,4 +1,6 @@
 import pandas as pd
+import warnings
+import sklearn
 from classifiers.Baseline import BaselineModel
 from classifiers.KNN import KNNModel
 from classifiers.LogisticRegression import LRModel
@@ -9,6 +11,13 @@ from classifiers.decision_tree_classifiers.DecisionTree import DecisionTreeModel
 from classifiers.emsemble_classifiers.AdaBoost import AdaBoostModel
 from classifiers.emsemble_classifiers.Bagging import BaggingModel
 from classifiers.emsemble_classifiers.RandomForest import RandomForestModel
+from classifiers.bayes_classifiers.GaussianNB import GaussianNBModel
+from classifiers.bayes_classifiers.BernoulliNB import BernoulliNBModel
+from classifiers.bayes_classifiers.MultinomialNB import MultinomialNBModel
+from classifiers.bayes_classifiers.ComplementNB import ComplementNBModel
+from classifiers.neural_network_classifiers.MLPModel import MLPModel
+
+warnings.filterwarnings("ignore", category=sklearn.exceptions.ConvergenceWarning)
 
 baseline = BaselineModel()
 knn = KNNModel()
@@ -20,8 +29,14 @@ dt = DecisionTreeModel()
 adaboost = AdaBoostModel()
 bagging = BaggingModel()
 rf = RandomForestModel()
+gaussian_nb = GaussianNBModel()
+bernoulli_nb = BernoulliNBModel()
+multi_nb = MultinomialNBModel()
+complement_nb = ComplementNBModel()
+mlp = MLPModel()
 
-no_tuning_models = [baseline, knn, lr, svm_c, svm_nu, svm_linear, dt, adaboost, bagging, rf]
+no_tuning_models = [baseline, knn, lr, svm_c, svm_nu, svm_linear, dt, adaboost, bagging, rf, gaussian_nb,
+                    bernoulli_nb, multi_nb, complement_nb, mlp]
 
 
 # Preprocessed Data 1: Dropping columns with missing data (1976-2004)

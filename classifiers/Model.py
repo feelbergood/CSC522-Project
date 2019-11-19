@@ -55,9 +55,21 @@ class Model:
 
         tp, tn, fp, fn = int(tn(y, y_pred)), int(tp(y, y_pred)), int(fn(y, y_pred)), int(fp(y, y_pred))
         accuracy = (tp + tn) / (tp + tn + fp + fn)
-        precision = tp / (tp + fp)
-        recall = tp / (tp + fn)
-        f1 = 2 * (precision) * (recall) / (precision + recall)
+        if tp == 0 and fp == 0 and fn == 0:
+            precision = 1
+            recall = 1
+            f1 = 1
+        elif tp == 0 and (fp > 0 or fn > 0):
+            precision = 0
+            recall = 0
+            f1 = 0
+        else:
+            precision = tp / (tp + fp)
+            recall = tp / (tp + fn)
+            f1 = 2 * (precision) * (recall) / (precision + recall)
+        # precision = tp / (tp + fp)
+        # recall = tp / (tp + fn)
+        # f1 = 2 * (precision) * (recall) / (precision + recall)
         perf = {"tp": tp, "tn": tn, "fp": fp, "fn": fn, "accuracy": accuracy, "precision": precision, "recall": recall,
                 "f1": f1}
         self.performance = perf
