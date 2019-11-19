@@ -1,5 +1,7 @@
 import csv
 import os
+
+import numpy as np
 import pandas as pd
 
 dirname = os.path.dirname(__file__)
@@ -29,6 +31,7 @@ for index, row in df_team.iterrows():
     if team in playoff_teams[year]:
         df_team.loc[index, 'class'] = 1
 
+
 # df_team.to_csv('preprocessed_data/team_seasons_classified_orig.csv', index=False)
 
 
@@ -40,3 +43,29 @@ def reduce_columns(df_input):
 
 
 # reduce_columns(df_team).to_csv('preprocessed_data/team_seasons_classified_1.csv', index=False)
+
+def reduce_rows(df_input):
+    df_output = df_input[df_input.o_3pm != 0]
+    df_output = df_output[df_output.o_3pa != 0]
+    return df_output
+
+
+# reduce_rows(df_team).to_csv('preprocessed_data/team_seasons_classified_2.csv', index=False)
+
+def replace_with_mean(df_input):
+    df_input['o_3pm'] = df_input['o_3pm'].replace(0, np.NaN)
+    df_input['o_3pa'] = df_input['o_3pa'].replace(0, np.NaN)
+    df_output = df_input.fillna(df_input.mean())
+    return df_output
+
+
+# replace_with_mean(df_team).to_csv('preprocessed_data/team_seasons_classified_3.csv', index=False)
+
+def replace_with_median(df_input):
+    df_input['o_3pm'] = df_input['o_3pm'].replace(0, np.NaN)
+    df_input['o_3pa'] = df_input['o_3pa'].replace(0, np.NaN)
+    df_output = df_input.fillna(df_input.median())
+    return df_output
+
+
+# replace_with_median(df_team).to_csv('preprocessed_data/team_seasons_classified_4.csv', index=False)
