@@ -2,8 +2,8 @@ import pandas as pd
 import warnings
 import sklearn
 from classifiers.Baseline import BaselineModel
-from classifiers.KNN import KNNModel
-from classifiers.LogisticRegression import LRModel
+from classifiers.knn_classifiers.KNN import KNNModel
+from classifiers.lr_classifiers.LogisticRegression import LRModel
 from classifiers.svm_classifiers.SVM_C import SVMCModel
 from classifiers.svm_classifiers.SVM_Nu import SVMNuModel
 from classifiers.svm_classifiers.SVM_Linear import SVMLinearModel
@@ -35,7 +35,8 @@ multi_nb = MultinomialNBModel()
 complement_nb = ComplementNBModel()
 mlp = MLPModel()
 
-no_tuning_models = [baseline, knn, lr, svm_c, svm_nu, svm_linear, dt, adaboost, bagging, rf, gaussian_nb,
+# Removed baseline from models in case baseline result changes
+no_tuning_models = [knn, lr, svm_c, svm_nu, svm_linear, dt, adaboost, bagging, rf, gaussian_nb,
                     bernoulli_nb, multi_nb, complement_nb, mlp]
 
 
@@ -47,32 +48,14 @@ def get_xy():
     return x, y
 
 
-# Preprocessed Data 2: Other ways of dealing with missing data
-def get_xy_1():
-    return 1, 1
-
-
-# Experiment with data 1 and no hyper-parameter tuning
-def no_tuning_experiment():
+def main():
+    print("1. Dropping columns with missing data (1976-2004)")
     x, y = get_xy()
     for model in no_tuning_models:
-        model.get_and_save_performance(x, y, "results/train_evaluation_no_tuning.csv")
+        model.get_and_save_performance(x, y, "results/train_evaluation_no_tuning.csv", "results/figures1/")
         print("--------------" + model.get_name() + "--------------")
         print(model.get_confusion_matrix())
         print(model.get_performance())
-
-
-# Experiment with data 1 and hyper-parameter tuning
-def tuning_experiment():
-    print("Experiment with Hyper-parameter Tuning")
-
-
-def main():
-    print("1. Dropping columns with missing data (1976-2004)")
-    print("1.1. Experiment without Hyper-parameter Tuning")
-    no_tuning_experiment()
-    print("\n1.2. Experiment with Hyper-parameter Tuning")
-    tuning_experiment()
 
 
 main()
