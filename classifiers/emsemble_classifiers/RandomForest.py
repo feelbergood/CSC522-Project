@@ -1,10 +1,8 @@
 from sklearn.ensemble import RandomForestClassifier
+from classifiers.Model import Model
 
 
-def get_model():
-    rfc = RandomForestClassifier(n_estimators=100)
-    return rfc
-
-
-def get_name():
-    return "RandomForest"
+class RandomForestModel(Model):
+    def __init__(self):
+        self.name = "RandomForest"
+        self.model = RandomForestClassifier(n_estimators=100)

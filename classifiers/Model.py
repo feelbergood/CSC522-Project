@@ -1,4 +1,4 @@
-import sklearn
+import os
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import cross_val_predict
 import pandas as pd
@@ -29,13 +29,19 @@ class Model:
         return self.performance
 
     def save_performance(self, filename):
-        evaluation_metrics = pd.read_csv(filename, index_col=0)
-        new_row = self.performance
-        self.performance = new_row
-        evaluation_metrics.loc[self.name] = new_row
-        evaluation_metrics.to_csv("results/train_evaluation.csv")
+        if os.path.isfile(filename):
+            evaluation_metrics = pd.read_csv(filename, index_col=0)
+            new_row = self.performance
+            self.performance = new_row
+            evaluation_metrics.loc[self.name] = new_row
+            evaluation_metrics.to_csv(filename)
+        else:
+            new_row = self.performance
+            self.performance = new_row
+            df = pd.DataFrame.from_dict({self.name:self.performance}, orient="index")
+            df.to_csv(filename)
 
-    def get_and_save_performance(self, x, y):
+    def get_and_save_performance(self, x, y, filename):
         y_pred = cross_val_predict(self.model, x, y, cv=10)
         self.confusion_matrix = confusion_matrix(y, y_pred)
 
@@ -55,5 +61,5 @@ class Model:
         perf = {"tp": tp, "tn": tn, "fp": fp, "fn": fn, "accuracy": accuracy, "precision": precision, "recall": recall,
                 "f1": f1}
         self.performance = perf
-        self.save_performance("results/train_evaluation.csv")
+        self.save_performance(filename)
         return perf
