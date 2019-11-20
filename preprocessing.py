@@ -69,3 +69,15 @@ def replace_with_median(df_input):
 
 
 # replace_with_median(df_team).to_csv('preprocessed_data/team_seasons_classified_4.csv', index=False)
+
+def class_count(df_input):
+    seriesObj = df_input.apply(lambda x: True if x['class'] == 1 else False, axis=1)
+    numOfOnes = len(seriesObj[seriesObj == True].index)
+    print('class == 1 : ', numOfOnes)
+    seriesObj = df_input.apply(lambda x: True if x['class'] == 0 else False, axis=1)
+    numOfZeroes = len(seriesObj[seriesObj == True].index)
+    print('class == 0 : ', numOfZeroes)
+
+
+class_count(df_team)
+
