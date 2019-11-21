@@ -3,7 +3,7 @@ import warnings
 import sklearn
 from classifiers.Baseline import BaselineModel
 from classifiers.knn_classifiers.KNN import TunedKNNModel
-from classifiers.lr_classifiers.LogisticRegression import LRModel
+from classifiers.lr_classifiers.LogisticRegression import TunedLRModel
 from classifiers.svm_classifiers.SVM_C import SVMCModel
 from classifiers.svm_classifiers.SVM_Nu import SVMNuModel
 from classifiers.svm_classifiers.SVM_Linear import SVMLinearModel
@@ -21,7 +21,7 @@ warnings.filterwarnings("ignore", category=sklearn.exceptions.ConvergenceWarning
 
 baseline = BaselineModel()
 knn = TunedKNNModel()
-lr = LRModel()
+lr = TunedLRModel()
 svm_c = SVMCModel()
 svm_nu = SVMNuModel()
 svm_linear = SVMLinearModel()
@@ -35,7 +35,7 @@ multi_nb = MultinomialNBModel()
 complement_nb = ComplementNBModel()
 mlp = MLPModel()
 
-tuning_models = [knn]
+tuning_models = [knn, lr]
 # lr, svm_c, svm_nu, svm_linear, dt, adaboost, bagging, rf, gaussian_nb, bernoulli_nb,
 # multi_nb, complement_nb, mlp]
 
@@ -51,7 +51,7 @@ def main():
     print("1. Dropping columns with missing data (1976-2004)")
     x, y = get_xy()
     for model in tuning_models:
-        model.get_and_save_performance(x, y, "results/train_evaluation_tuning.csv")
+        model.get_and_save_performance(x, y, "results/train_evaluation_with_tuning.csv", "results/figures1/")
         print("--------------" + model.get_name() + "--------------")
         print(model.get_confusion_matrix())
         print(model.get_performance())

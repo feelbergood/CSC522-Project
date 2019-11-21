@@ -29,7 +29,7 @@ class KNNModel(Model):
 
 class TunedKNNModel(Model):
     def __init__(self):
-        self.name = "KNN"
+        self.name = "KNNTuned"
         self.model = KNeighborsClassifier(n_neighbors=20, weights="uniform", metric="euclidean")
 
 
