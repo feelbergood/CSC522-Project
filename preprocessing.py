@@ -36,7 +36,7 @@ for index, row in df_team.iterrows():
 
 
 def reduce_columns(df_input):
-    df_output = df_input[['o_fgm', 'o_fga', 'o_ftm', 'o_fta', 'o_oreb', 'o_dreb', 'o_reb', 'o_asts', 'o_pf', 'o_stl',
+    df_output = df_input[['team', 'year', 'leag', 'o_fgm', 'o_fga', 'o_ftm', 'o_fta', 'o_oreb', 'o_dreb', 'o_reb', 'o_asts', 'o_pf', 'o_stl',
                           'o_to', 'o_blk', 'o_pts', 'd_fgm', 'd_fga', 'd_ftm', 'd_fta', 'd_oreb', 'd_dreb', 'd_reb',
                           'd_asts', 'd_pf', 'd_stl', 'd_to', 'd_blk', 'd_pts', 'pace', 'class']]
     return df_output

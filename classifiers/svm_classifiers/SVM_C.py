@@ -1,41 +1,39 @@
+import os
 import pandas as pd
-from sklearn_pandas import DataFrameMapper
-from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import train_test_split
 from classifiers.Model import Model
 
+dir_name = os.path.dirname(__file__)
+data_path = os.path.join(dir_name, '../../preprocessed_data/team_seasons_classified_1.csv')
 
-# C-Support Vector Classification
-def get_model():
-    param_grid = {"gamma": [0.001, 0.01, 0.1, 1, 10, 100],
-                  "C": [0.001, 0.01, 0.1, 1, 10, 100]}
-    grid_search = GridSearchCV(SVC(), param_grid, cv=5)
+C = [0.001, 0.01, 0.1, 0.2, 0.3, 1, 5, 10, 20, 100, 200, 1000]
+degree = [1, 2, 3, 4, 5]
+coef0 = [0.0001, 0.001, 0.002, 0.01, 0.02, 0.1, 0.2, 0.3, 1, 2, 5, 10]
+gamma = [0.0001,0.001, 0.002, 0.01, 0.02, 0.03, 0.1, 0.2, 1, 2, 3, 5, 10, 100, 1000]
+kernels = ["linear", "poly", "rbf", "sigmoid"]
 
-    data = pd.read_csv('preprocessed_data/team_seasons_classified_1.csv')
 
-    x = data[['o_fgm', 'o_fga', 'o_ftm', 'o_fta', 'o_oreb',
-              'o_dreb', 'o_reb', 'o_asts', 'o_pf', 'o_stl', 'o_to', 'o_blk', 'o_pts', 'd_fgm', 'd_fga', 'd_ftm',
-              'd_fta', 'd_oreb',
-              'd_dreb', 'd_reb', 'd_asts', 'd_pf', 'd_stl', 'd_to', 'd_blk', 'd_pts', 'pace']]
-    y = data['class']
-    mapper = DataFrameMapper([(x.columns, StandardScaler())])
-    x = mapper.fit_transform(x, 4)
-    mapper = DataFrameMapper([(y, LabelEncoder())])
-    y = mapper.fit_transform(y, 4).ravel()
-
-    X_train, X_test, y_train, y_test = train_test_split(x, y, random_state=10)
-    grid_search.fit(X_train, y_train)
-    # print("Test set score:{:.2f}".format(grid_search.score(X_test, y_test)))
-    # print("Best parameters:{}".format(grid_search.best_params_))
-    # print("Best score on train set:{:.2f}".format(grid_search.best_score_))
-
-    svm = SVC(gamma=grid_search.best_params_.get("gamma"), C=grid_search.best_params_.get("C"))
-    return svm
+def get_tuned_parameters():
+    data = pd.read_csv(data_path)
+    x = data.iloc[:, 3:-1]
+    y = data.iloc[:, -1]
+    param_grid = {"C": [0.001, 0.01, 0.1, 1, 10, 100]}
+    grid_search = GridSearchCV(SVC(), param_grid, cv=10)
+    grid_search.fit(x, y)
+    print("Best parameters for rbf kernel:{}".format(grid_search.best_params_))
 
 
 class SVMCModel(Model):
     def __init__(self):
         self.name = "C-Support SVC"
         self.model = SVC(gamma="scale")
+
+
+class TunedSVMCModel(Model):
+    def __init__(self):
+        self.name = "C-Support SVC Tuned"
+        self.model = SVC(gamma=0.001, C=0.001)
+
+
+# get_tuned_parameters()

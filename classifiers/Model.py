@@ -44,7 +44,6 @@ class Model:
             df.to_csv(filename)
 
     def draw_and_save_roc(self, fpr, tpr, roc_auc, figure_path):
-        plt.figure()
         plt.title('Receiver Operating Characteristic')
         plt.plot(fpr, tpr, 'b', label='AUC = %0.2f' % roc_auc)
         plt.legend(loc='lower right')
@@ -56,6 +55,7 @@ class Model:
         figure_name = self.get_name().replace(" ", "_")
         path = figure_path+figure_name+"_ROC.png"
         plt.savefig(path)
+        plt.clf()
 
     def get_and_save_performance(self, x, y, filename, figure_path):
         y_pred = cross_val_predict(self.model, x, y, cv=10)

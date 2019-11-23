@@ -13,7 +13,7 @@ def get_tuned_parameters():
                   "solver": ["newton-cg", "lbfgs", "liblinear", "sag", "saga"]}
     grid_search = GridSearchCV(LogisticRegression(), param_grid, cv=10)
     data = pd.read_csv(data_path)
-    x = data.iloc[:, :-1]
+    x = data.iloc[:, 3:-1]
     y = data.iloc[:, -1]
     grid_search.fit(x, y)
     print("Best parameters:{}".format(grid_search.best_params_))
