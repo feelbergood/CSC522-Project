@@ -1,20 +1,9 @@
 # CSC522 Project
 NBA teams making playoffs prediction
 
-## Work flow for adding new models
-- Libraries: pandas, sklearn, sklearn-pandas
+## Results instructions
 
-- Create your own model by creating a new python file with two methods get_model() and get_name(), for example:
-```{python}
-def get_model():
-    logisticRegr = LogisticRegression()
-    # model = logisticRegr.fit()
-    return logisticRegr
-
-def get_name():
-    return "LR"
-```
-
-- import your model by importing ```<modelname>.py``` you created in the file ```model_evaluation.py```
-- add your model to ```models``` list in ```model_evaluation.py```
-- run ```model_evaluation.py``` and see the results in ```train_evaluations.csv```
+- model_evaluation_1.csv/figures1/team_seasons_classified_1.csv : Remove columns with missing values
+- model_evaluation_2.csv/figures2/team_seasons_classified_2.csv : Remove rows with missing values
+- model_evaluation_3.csv/figures3/team_seasons_classified_3.csv : Replace missing values with mean values
+- model_evaluation_4.csv/figures4/team_seasons_classified_4.csv : Replace missing values with median values
